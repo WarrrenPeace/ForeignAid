@@ -8,11 +8,11 @@ TagManager:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
-  - 
+  - Country
+  - Coin
   - 
   - 
   - 
@@ -40,6 +40,18 @@ TagManager:
   m_SortingLayers:
   - name: Background
     uniqueID: 4184780057
+    locked: 0
+  - name: Overlay
+    uniqueID: 852782901
+    locked: 0
+  - name: Shadow
+    uniqueID: 472323477
+    locked: 0
+  - name: Icons
+    uniqueID: 3079835581
+    locked: 0
+  - name: Player
+    uniqueID: 2944125385
     locked: 0
   - name: Default
     uniqueID: 0
