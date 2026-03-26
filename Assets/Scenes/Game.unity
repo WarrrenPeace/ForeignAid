@@ -1625,7 +1625,7 @@ SpriteRenderer:
   m_SortingLayer: -4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b252c0fe6e71b844e8ee34698329a7bb, type: 3}
-  m_Color: {r: 0.19339621, g: 0.57454735, b: 1, a: 0.36078432}
+  m_Color: {r: 0.43374982, g: 0.042452812, b: 1, a: 0.36078432}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1764,7 +1764,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   PC: {fileID: 958676847}
   SR: {fileID: 958676846}
-  AM: {fileID: 0}
+  AM: {fileID: 958676849}
   currentFUNDING: 0
   budgetMult: 0.25
   IncomeTimer: 5

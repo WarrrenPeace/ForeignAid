@@ -9,6 +9,7 @@ public class Country : MonoBehaviour
 
     [SerializeField] float currentFUNDING; //how many coins county has
     [SerializeField] float budgetMult = 0.25f; //amount multiplied to budget to control how fast funding is decreased
+    bool isOutOfFunding;
 
     int FundingRangeMin = -25;
     int FundingRangeMax = 25;
@@ -44,10 +45,25 @@ public class Country : MonoBehaviour
     }
     void TickDownToSpendFunding()
     {
-        if(currentFUNDING - 1 >= FundingRangeMin)
+        if(!isOutOfFunding)
         {
-            currentFUNDING -= 1 * budgetMult * Time.deltaTime;
+            if(currentFUNDING - 1 >= FundingRangeMin)
+            {
+                currentFUNDING -= 1 * budgetMult * Time.deltaTime;
+            }
+            else
+            {
+                isOutOfFunding = true;
+                KillCountry();
+            }
         }
-        
+    }
+    public void SupplyFunding(int amount)
+    {
+        currentFUNDING += amount;
+    }
+    void KillCountry()
+    {
+        AM.SetTrigger("Kill");
     }
 }
