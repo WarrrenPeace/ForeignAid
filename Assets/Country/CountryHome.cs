@@ -11,6 +11,7 @@ public class CountryHome : Country
     void Start()
     {
         CountryStart();
+        SetUPGUI();
     }
 
     // Update is called once per frame

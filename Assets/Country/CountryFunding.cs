@@ -49,6 +49,9 @@ public class CountryFunding : MonoBehaviour
         //Check if eligible country
         if(!CountrySelector.instance.CheckValidCountry(CountrySelector.instance.GetTargetCountry()))
         {Debug.Log("NOT VALID COUNTRY"); return;}
+        //Check if country is alive
+        if(!CountrySelector.instance.GetTargetCountry().canRecieveFunding())
+        {Debug.Log("COUNTRY NOT ACCEPTING"); return;}
         //Check if enough coins in collection
         if(!CoinCollection.instance.HasEnoughCoins())
         {Debug.Log("NOT ENOUGH COINS"); return;}

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - HomeCountry
   - OtherCountry
+  - WorldCanvas
   layers:
   - Default
   - TransparentFX

@@ -1,11 +1,14 @@
-using NUnit.Framework;
 using UnityEngine;
+using TMPro;
+using System;
 
 public class Country : MonoBehaviour
 {
     public PolygonCollider2D PC;
     public SpriteRenderer SR;
     public Animator AM;
+    [SerializeField] TextMeshProUGUI GUICountryName;
+    [SerializeField] TextMeshProUGUI GUICountryFunding;
 
     [SerializeField] float currentFUNDING; //how many coins county has
     [SerializeField] float budgetMult = 0.25f; //amount multiplied to budget to control how fast funding is decreased
@@ -19,6 +22,18 @@ public class Country : MonoBehaviour
     void Start()
     {
         CountryStart();
+        SetUPGUI();
+        
+    }
+    public void SetUPGUI()
+    {
+        //CountryUI = Instantiate(CountryUIPrefab,GameObject.FindGameObjectWithTag("WorldCanvas").transform);
+        GUICountryName.text = gameObject.name;
+    }
+    String FundingToString()
+    {
+        int temp = (int)currentFUNDING;
+        return temp.ToString();
     }
     public void CountryStart()
     {
@@ -31,7 +46,8 @@ public class Country : MonoBehaviour
     }
     void SetUpRandomStartBudget()
     {
-        currentFUNDING = Random.Range(15,26);
+        currentFUNDING = UnityEngine.Random.Range(15,26);
+        GUICountryFunding.text = FundingToString();
     }
 
     // Update is called once per frame
@@ -50,6 +66,7 @@ public class Country : MonoBehaviour
             if(currentFUNDING - 1 >= FundingRangeMin)
             {
                 currentFUNDING -= 1 * budgetMult * Time.deltaTime;
+                GUICountryFunding.text = FundingToString();
             }
             else
             {
@@ -65,5 +82,18 @@ public class Country : MonoBehaviour
     void KillCountry()
     {
         AM.SetTrigger("Kill");
+        GUICountryFunding.text = "";
     }
+    public bool canRecieveFunding()
+    {
+        if(isOutOfFunding)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
 }
