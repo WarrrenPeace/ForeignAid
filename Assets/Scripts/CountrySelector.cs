@@ -22,12 +22,35 @@ public class CountrySelector : MonoBehaviour
     {
         InvokeRepeating("DetermineTick",0,0.05f);
     }
+    public Country GetTargetCountry()
+    {
+        if(targetCountry)
+        {
+            return targetCountry;
+        }
+        else
+        return null;
+    }
+    public bool CheckValidCountry(Country country)
+    {
+        if(country.tag == "OtherCountry")
+        {
+            return true;
+        }
+        else if (country.tag == "HomeCountry")
+        {
+            //Debug.Log("Checked home");
+            return false;
+        }
+        else
+        return false;
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Country"))
         {
-            Debug.Log("Entered" + collision.name);
+            //Debug.Log("Entered" + collision.name);
             selectedCountries.Add(collision.gameObject.GetComponent<Country>());
         }
         
@@ -36,7 +59,7 @@ public class CountrySelector : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Country"))
         {
-            Debug.Log("left" + collision.name);
+            //Debug.Log("left" + collision.name);
             selectedCountries.Remove(collision.gameObject.GetComponent<Country>());
         }
         
@@ -54,6 +77,7 @@ public class CountrySelector : MonoBehaviour
         }
         else
         {
+            targetCountry = null;
             targetCountrytext.text = "";
         }
         

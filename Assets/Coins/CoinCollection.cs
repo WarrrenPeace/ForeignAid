@@ -1,31 +1,52 @@
 using UnityEngine;
+using TMPro;
 
 public class CoinCollection : MonoBehaviour
 {
     public static CoinCollection instance;
-    [SerializeField] int coinAmount;
+    [SerializeField] TextMeshProUGUI coinAmountText;
+    [SerializeField] int amountOfCoins;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         instance = this;
     }
-
-    // Update is called once per frame
-    public void AddCoinToCollection(int amount)
+    public bool HasEnoughCoins()
     {
-        coinAmount += amount;
-        Debug.Log("Added coin");
-    }
-    public void RemoveCoinFromCollection(int amount)
-    {
-        if(coinAmount - amount >= 0)
+        if(amountOfCoins -1 >= 0)
         {
-            coinAmount -= amount;
-            Debug.Log("removed coin");
+            return true;
         }
         else
         {
-            Debug.Log("not enough coins to remove");
+            coinAmountText.text = "";
+            return false;
+        }
+    }
+    // Update is called once per frame
+    public void AddCoinToCollection(int amount)
+    {
+        amountOfCoins += amount;
+        coinAmountText.text = amountOfCoins.ToString();
+    }
+    public void RemoveCoinFromCollection()
+    {
+        if(amountOfCoins - 1 >= 0)
+        {
+            amountOfCoins -= 1;
+            if(amountOfCoins > 0)
+            {
+                coinAmountText.text = amountOfCoins.ToString();
+            }
+            else
+            {
+                coinAmountText.text = "";
+            }
+            
+        }
+        else
+        {
+            Debug.Log("Spent coin you didnt have");
         }
     }
 }

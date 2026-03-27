@@ -58,7 +58,7 @@ public class Country : MonoBehaviour
             }
         }
     }
-    public void SupplyFunding(int amount)
+    public void DonateFunding(int amount)
     {
         currentFUNDING += amount;
     }
