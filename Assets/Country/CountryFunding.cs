@@ -7,18 +7,21 @@ public class CountryFunding : MonoBehaviour
 {
     [SerializeField] InputActionReference interact;
     private bool isDonating;
-    private float timerToSpendCoin = 0.25f;
+    private float donationSpeedUpTimer = 1f;
+    private float speedUpMult = 1f;
+    private float timerToSpendCoin = 1f;
      
     void Update()
     {
         PlayerInput();
-        if(isDonating)DonationTimer();
+        DonationTimer();
     }
     void PlayerInput()
     {
         if(interact.action.triggered) //initial click
         {
             timerToSpendCoin = 0.25f;
+            donationSpeedUpTimer = 1;
             isDonating = true;
         }
         if(interact.action.IsPressed()) // bool for holding down spacebar
@@ -28,20 +31,30 @@ public class CountryFunding : MonoBehaviour
         else
         {
             isDonating = false;
+            donationSpeedUpTimer = 1;
         }
     }
 
     void DonationTimer()
     {
-        if(timerToSpendCoin - 1 >= 0)
+        if(isDonating)
         {
-            timerToSpendCoin -= 1 * Time.deltaTime;;
+            if(donationSpeedUpTimer + speedUpMult <= 6)
+            {
+                donationSpeedUpTimer += speedUpMult * Time.deltaTime;
+            }
+
+            if(timerToSpendCoin - 1 >= 0)
+            {
+                timerToSpendCoin -= 1 * donationSpeedUpTimer * Time.deltaTime;
+            }
+            else
+            {
+                timerToSpendCoin = 1.5f;
+                CheckConditionsForDonatingCoin(1);
+            }
         }
-        else
-        {
-            timerToSpendCoin = 1.5f;
-            CheckConditionsForDonatingCoin(1);
-        }
+        
         
     }
     void CheckConditionsForDonatingCoin(int amount)

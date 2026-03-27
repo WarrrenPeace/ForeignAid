@@ -47,6 +47,7 @@ public class Country : MonoBehaviour
     void SetUpRandomStartBudget()
     {
         currentFUNDING = UnityEngine.Random.Range(15,26);
+        budgetMult = UnityEngine.Random.Range(0.25f,2);
         GUICountryFunding.text = FundingToString();
     }
 
