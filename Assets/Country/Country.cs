@@ -1,9 +1,15 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Diagnostics;
 
 public class Country : MonoBehaviour
 {
+    public enum Condition
+    {
+        Alive, InCrisis, Dead
+    }
+    [SerializeField] Condition StateCondition;
     public PolygonCollider2D PC;
     public SpriteRenderer SR;
     public Animator AM;
@@ -21,13 +27,12 @@ public class Country : MonoBehaviour
 
     void Start()
     {
+        CountryCrisisManager.instance.AddCountryToList(this); //dont do with home country
         CountryStart();
         SetUPGUI();
-        
     }
     public void SetUPGUI()
     {
-        //CountryUI = Instantiate(CountryUIPrefab,GameObject.FindGameObjectWithTag("WorldCanvas").transform);
         GUICountryName.text = gameObject.name;
     }
     String FundingToString()
@@ -42,7 +47,7 @@ public class Country : MonoBehaviour
         AM = GetComponent<Animator>();
 
 
-        SetUpRandomStartBudget();
+        //SetUpRandomStartBudget();
     }
     void SetUpRandomStartBudget()
     {
@@ -50,15 +55,38 @@ public class Country : MonoBehaviour
         budgetMult = UnityEngine.Random.Range(0.25f,2);
         GUICountryFunding.text = FundingToString();
     }
+    public void SetUpRandomCrisis(int funding, float mult)
+    {
+        StateCondition = Condition.InCrisis;
+        currentFUNDING -= funding;
+        budgetMult = mult;
+        GUICountryFunding.text = FundingToString();
+    }
 
-    // Update is called once per frame
     void Update()
     {
         CountryUpdate();
     }
     void CountryUpdate()
     {
-        TickDownToSpendFunding();
+        
+        switch (StateCondition)
+        {
+            case Condition.Alive:
+
+            break;
+
+
+            case Condition.InCrisis:
+            TickDownToSpendFunding();
+
+            break;
+
+
+            case Condition.Dead:
+
+            break;
+        }
     }
     void TickDownToSpendFunding()
     {
@@ -71,7 +99,6 @@ public class Country : MonoBehaviour
             }
             else
             {
-                isOutOfFunding = true;
                 KillCountry();
             }
         }
@@ -82,6 +109,8 @@ public class Country : MonoBehaviour
     }
     void KillCountry()
     {
+        StateCondition = Condition.Dead;
+        isOutOfFunding = true;
         AM.SetTrigger("Kill");
         GUICountryFunding.text = "";
     }
@@ -94,6 +123,17 @@ public class Country : MonoBehaviour
         else
         {
             return true;
+        }
+    }
+    public bool isInCrisis()
+    {
+        if(StateCondition == Condition.InCrisis)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 

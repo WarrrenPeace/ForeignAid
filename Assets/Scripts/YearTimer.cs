@@ -1,8 +1,10 @@
 using UnityEngine;
+using TMPro;
 
 public class YearTimer : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] TextMeshProUGUI timePassedText;
+    private float timePassed;
     void Start()
     {
         
@@ -11,6 +13,15 @@ public class YearTimer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        TickUpTimer();
+    }
+    void TickUpTimer()
+    {
+        timePassed += 1 * Time.deltaTime;
+        StructureTimePassedText();
+    }
+    void StructureTimePassedText()
+    {
+        timePassedText.text = timePassed.ToString();
     }
 }
