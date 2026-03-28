@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
-using System.Diagnostics;
+using UnityEditor.PackageManager;
 
 public class Country : MonoBehaviour
 {
@@ -15,8 +15,10 @@ public class Country : MonoBehaviour
     public Animator AM;
     [SerializeField] TextMeshProUGUI GUICountryName;
     [SerializeField] TextMeshProUGUI GUICountryFunding;
+    [SerializeField] TextMeshProUGUI GUICountryCollapse;
 
     [SerializeField] float currentFUNDING; //how many coins county has
+    [SerializeField] float deathTimer; //how much time until death
     [SerializeField] float budgetMult = 0.25f; //amount multiplied to budget to control how fast funding is decreased
     bool isOutOfFunding;
 
@@ -55,13 +57,28 @@ public class Country : MonoBehaviour
         budgetMult = UnityEngine.Random.Range(0.25f,2);
         GUICountryFunding.text = FundingToString();
     }
-    public void SetUpRandomCrisis(int funding, float mult)
+    public void SetUpRandomCrisis(int funding, float mult, float timeLeft)
     {
-        StateCondition = Condition.InCrisis;
-        currentFUNDING -= funding;
-        budgetMult = mult;
+        //Need to account for country having enough funding already to cover it instantly
+        if(currentFUNDING + funding <= -1)
+        {
+            StateCondition = Condition.InCrisis;
+            currentFUNDING += funding; 
+            
+            deathTimer = timeLeft;
+            budgetMult = mult;
+            GUICountryFunding.text = FundingToString();
+            //Set color of GUICountryFunding to grey when negative value
+        }
+        else
+        {
+            //saved from crisis!
+            Debug.Log(name + " Saved from crisis");
+        }
+        currentFUNDING += funding; 
         GUICountryFunding.text = FundingToString();
     }
+        
 
     void Update()
     {
@@ -78,7 +95,7 @@ public class Country : MonoBehaviour
 
 
             case Condition.InCrisis:
-            TickDownToSpendFunding();
+                TickDownToDeath();
 
             break;
 
@@ -88,31 +105,59 @@ public class Country : MonoBehaviour
             break;
         }
     }
-    void TickDownToSpendFunding()
+    void TickDownToDeath()
     {
-        if(!isOutOfFunding)
+        if(deathTimer - 1 >= 0f)
         {
-            if(currentFUNDING - 1 >= FundingRangeMin)
-            {
-                currentFUNDING -= 1 * budgetMult * Time.deltaTime;
-                GUICountryFunding.text = FundingToString();
-            }
-            else
-            {
-                KillCountry();
-            }
+            deathTimer -= 1 * Time.deltaTime;
+            //GUICountryFunding.text = FundingToString();
+            GUICountryCollapse.text = "Will Collapse in " + EasyInt(deathTimer).ToString();
+        }
+        else
+        {
+            KillCountry();
         }
     }
     public void DonateFunding(int amount)
     {
-        currentFUNDING += amount;
+        
+        switch (StateCondition) 
+        {
+            case Condition.Alive: //Set color of GUICountryFunding to gold when positive value
+                currentFUNDING += amount;
+                GUICountryFunding.text = FundingToString();
+            break;
+
+
+            case Condition.InCrisis: 
+                currentFUNDING += amount;
+                GUICountryFunding.text = FundingToString();
+                if(currentFUNDING >= 0)
+                {
+                    SavedFromCrisis();
+                }
+            break;
+
+
+            case Condition.Dead:
+
+            break;
+        }
+    }
+    void SavedFromCrisis()
+    {
+        StateCondition = Condition.Alive;
+
+        GUICountryCollapse.text = "";
     }
     void KillCountry()
     {
         StateCondition = Condition.Dead;
+        CountryCrisisManager.instance.RemoveCountryFromList(this);
         isOutOfFunding = true;
         AM.SetTrigger("Kill");
         GUICountryFunding.text = "";
+        GUICountryCollapse.text = "";
     }
     public bool canRecieveFunding()
     {
@@ -127,14 +172,21 @@ public class Country : MonoBehaviour
     }
     public bool isInCrisis()
     {
-        if(StateCondition == Condition.InCrisis)
+        switch (StateCondition)
         {
-            return true;
+            case Condition.Alive:
+                return false;
+            case Condition.InCrisis:
+                return false;
+            case Condition.Dead:
+                return false;
         }
-        else
-        {
-            return false;
-        }
+        Debug.Log("false");
+        return false;
+    }
+    int EasyInt(float value) //Solution for converting to in in the same line im converting it to string
+    {
+        return (int)value;
     }
 
 }

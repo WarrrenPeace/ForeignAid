@@ -357,7 +357,9 @@ MonoBehaviour:
   AM: {fileID: 299084876}
   GUICountryName: {fileID: 1084958123}
   GUICountryFunding: {fileID: 131804754}
+  GUICountryCollapse: {fileID: 1084958122}
   currentFUNDING: 0
+  deathTimer: 0
   budgetMult: 0.25
 --- !u!95 &299084876
 Animator:
@@ -762,6 +764,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+--- !u!114 &468454118 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5623468178447703689, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+  m_PrefabInstance: {fileID: 468454117}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &516704426
 GameObject:
   m_ObjectHideFlags: 0
@@ -1560,7 +1573,9 @@ MonoBehaviour:
   AM: {fileID: 757213286}
   GUICountryName: {fileID: 1353722780193815297}
   GUICountryFunding: {fileID: 41561098}
+  GUICountryCollapse: {fileID: 1355171412}
   currentFUNDING: 0
+  deathTimer: 0
   budgetMult: 0.25
 --- !u!95 &757213286
 Animator:
@@ -1658,11 +1673,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000015259
+      value: -1.819e-12
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 403
+      value: 479
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1685,6 +1700,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+--- !u!114 &759196794 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5623468178447703689, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+  m_PrefabInstance: {fileID: 759196793}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &890833948
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,7 +1957,9 @@ MonoBehaviour:
   AM: {fileID: 890833953}
   GUICountryName: {fileID: 1353722781151541175}
   GUICountryFunding: {fileID: 1011900500}
+  GUICountryCollapse: {fileID: 468454118}
   currentFUNDING: 0
+  deathTimer: 0
   budgetMult: 0.25
 --- !u!95 &890833953
 Animator:
@@ -2181,12 +2209,14 @@ MonoBehaviour:
   AM: {fileID: 958676849}
   GUICountryName: {fileID: 1605628564}
   GUICountryFunding: {fileID: 748145215}
+  GUICountryCollapse: {fileID: 1314278125}
   currentFUNDING: 0
+  deathTimer: 0
   budgetMult: 0.25
   IncomeTimer: 5
-  IncomeMult: 1
+  IncomeMult: 4
   coin: {fileID: 7657453325913864057, guid: 6bd783fcfb25ad34e8c08f4cddf028ac, type: 3}
-  amountOfCoinsToSpawn: 1
+  amountOfCoinsToSpawn: 2
 --- !u!95 &958676849
 Animator:
   serializedVersion: 7
@@ -2280,6 +2310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   listOfCountries: []
   gracePeriodTimer: 5
+  crisisTimer: 5
 --- !u!1001 &1084958120
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2354,11 +2385,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -488
+      value: -467
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 161
+      value: 184
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2386,6 +2417,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
   m_PrefabInstance: {fileID: 1084958120}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1084958122 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5623468178447703689, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+  m_PrefabInstance: {fileID: 1084958120}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!114 &1084958123 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1353722780986129746, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
@@ -2835,7 +2877,9 @@ MonoBehaviour:
   AM: {fileID: 1302266488}
   GUICountryName: {fileID: 1353722780235354411}
   GUICountryFunding: {fileID: 1738695240}
+  GUICountryCollapse: {fileID: 759196794}
   currentFUNDING: 0
+  deathTimer: 0
   budgetMult: 0.25
 --- !u!95 &1302266488
 Animator:
@@ -2859,6 +2903,17 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1314278125 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5623468178447703689, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+  m_PrefabInstance: {fileID: 1605628561}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &1355171411
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2937,7 +2992,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -287
+      value: -259
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2960,6 +3015,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+--- !u!114 &1355171412 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5623468178447703689, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
+  m_PrefabInstance: {fileID: 1355171411}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &1502388067
 GameObject:
   m_ObjectHideFlags: 0
@@ -3138,7 +3204,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 14.93
+      value: 96
       objectReference: {fileID: 0}
     - target: {fileID: 3310769789670799963, guid: 895d4e3250613774daa9f8821a7608d1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

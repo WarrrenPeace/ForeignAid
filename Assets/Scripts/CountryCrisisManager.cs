@@ -7,7 +7,7 @@ public class CountryCrisisManager : MonoBehaviour
     [SerializeField] List<Country> listOfCountries;
     private CountryHome home;
     [SerializeField] float gracePeriodTimer = 5;
-    [SerializeField] float crisisTimer = 5;
+    [SerializeField] float crisisTimer = 10;
 
     void Awake()
     {
@@ -22,6 +22,10 @@ public class CountryCrisisManager : MonoBehaviour
     public void AddCountryToList(Country country)
     {
         listOfCountries.Add(country);
+    }
+    public void RemoveCountryFromList(Country country)
+    {
+        listOfCountries.Remove(country);
     }
     public void AssignHomeCountry(CountryHome country)
     {
@@ -49,15 +53,32 @@ public class CountryCrisisManager : MonoBehaviour
     }
     void InflictCrisis()
     {
-        Country nextTarget;
-        nextTarget = listOfCountries[Random.Range(0,listOfCountries.Count)];
-        if(nextTarget.isInCrisis())
+        for (int i = 0; i < listOfCountries.Count; i++)
         {
-            nextTarget.SetUpRandomCrisis(Random.Range(-75, -15),Random.Range(0.25f, 0.51f));
+            Shuffle(listOfCountries);
+            if(listOfCountries[i].isInCrisis()) //Country already in need
+            {
+                //Skip it and find another
+                continue;
+            }
+            else 
+            {
+                //Apply crisis
+                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10, -4),Random.Range(0.25f, 0.51f),25);
+                break;
+            }
         }
-        else
+        
+    }
+    void Shuffle<Country>(List<Country> list)
+    {
+        int length = list.Count;
+        for (int i = 0; i < length; i++)
         {
-            InflictCrisis();
+            int r = i + Random.Range(0, length - i);
+            Country c = list[r];
+            list[r] = list[i];
+            list[i] = c;
         }
     }
 }

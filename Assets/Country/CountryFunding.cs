@@ -39,7 +39,7 @@ public class CountryFunding : MonoBehaviour
     {
         if(isDonating)
         {
-            if(donationSpeedUpTimer + speedUpMult <= 6)
+            if(donationSpeedUpTimer + speedUpMult <= 12)
             {
                 donationSpeedUpTimer += speedUpMult * Time.deltaTime;
             }
@@ -61,20 +61,19 @@ public class CountryFunding : MonoBehaviour
     {
         //Check if eligible country
         if(!CountrySelector.instance.CheckValidCountry(CountrySelector.instance.GetTargetCountry()))
-        {Debug.Log("NOT VALID COUNTRY"); return;}
+        {return;}
         //Check if country is alive
         if(!CountrySelector.instance.GetTargetCountry().canRecieveFunding())
-        {Debug.Log("COUNTRY NOT ACCEPTING"); return;}
+        {return;}
         //Check if enough coins in collection
         if(!CoinCollection.instance.HasEnoughCoins())
-        {Debug.Log("NOT ENOUGH COINS"); return;}
+        {return;}
         //After all of these donate the coin
         
         DonateCoinToCountry(amount);
     }
     void DonateCoinToCountry(int amountToDonate)
     {
-    Debug.Log("DONATED COIN");
         CoinCollection.instance.RemoveCoinFromCollection();
         CountrySelector.instance.GetTargetCountry().DonateFunding(amountToDonate);
 
