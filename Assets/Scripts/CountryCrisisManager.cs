@@ -42,7 +42,7 @@ public class CountryCrisisManager : MonoBehaviour
 
     void DetermineNextCrisis()
     {
-        if(Random.Range(0,101) >= 30)
+        if(Random.Range(0,101) >= 50)
         {
             InflictCrisis();
         }
@@ -64,7 +64,7 @@ public class CountryCrisisManager : MonoBehaviour
             else 
             {
                 //Apply crisis
-                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10, -4),Random.Range(0.25f, 0.51f),25);
+                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10, -4),-Random.Range(-30, -9));
                 break;
             }
         }

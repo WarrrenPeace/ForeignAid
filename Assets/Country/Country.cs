@@ -16,14 +16,12 @@ public class Country : MonoBehaviour
     [SerializeField] TextMeshProUGUI GUICountryName;
     [SerializeField] TextMeshProUGUI GUICountryFunding;
     [SerializeField] TextMeshProUGUI GUICountryCollapse;
+    [SerializeField] Color postiveBalance;
+    [SerializeField] Color negativeBalance;
 
     [SerializeField] float currentFUNDING; //how many coins county has
     [SerializeField] float deathTimer; //how much time until death
-    [SerializeField] float budgetMult = 0.25f; //amount multiplied to budget to control how fast funding is decreased
     bool isOutOfFunding;
-
-    int FundingRangeMin = -25;
-    int FundingRangeMax = 25;
 
 
 
@@ -51,30 +49,23 @@ public class Country : MonoBehaviour
 
         //SetUpRandomStartBudget();
     }
-    void SetUpRandomStartBudget()
-    {
-        currentFUNDING = UnityEngine.Random.Range(15,26);
-        budgetMult = UnityEngine.Random.Range(0.25f,2);
-        GUICountryFunding.text = FundingToString();
-    }
-    public void SetUpRandomCrisis(int funding, float mult, float timeLeft)
+    public void SetUpRandomCrisis(int funding, float timeLeft)
     {
         //Need to account for country having enough funding already to cover it instantly
         if(currentFUNDING + funding <= -1)
         {
             StateCondition = Condition.InCrisis;
-            currentFUNDING += funding; 
             
-            deathTimer = timeLeft;
-            budgetMult = mult;
-            GUICountryFunding.text = FundingToString();
+            deathTimer += timeLeft;
             //Set color of GUICountryFunding to grey when negative value
+            GUICountryFunding.color = negativeBalance;
         }
-        else
+        else //saved from crisis!
         {
-            //saved from crisis!
-            Debug.Log(name + " Saved from crisis");
+            
+            GUICountryFunding.color = postiveBalance;
         }
+
         currentFUNDING += funding; 
         GUICountryFunding.text = FundingToString();
     }
@@ -111,7 +102,7 @@ public class Country : MonoBehaviour
         {
             deathTimer -= 1 * Time.deltaTime;
             //GUICountryFunding.text = FundingToString();
-            GUICountryCollapse.text = "Will Collapse in " + EasyInt(deathTimer).ToString();
+            GUICountryCollapse.text = "Will Collapse in " + YearTimer.instance.StructureTime(deathTimer);
         }
         else
         {
@@ -148,6 +139,7 @@ public class Country : MonoBehaviour
     {
         StateCondition = Condition.Alive;
 
+        GUICountryFunding.color = postiveBalance;
         GUICountryCollapse.text = "";
     }
     void KillCountry()

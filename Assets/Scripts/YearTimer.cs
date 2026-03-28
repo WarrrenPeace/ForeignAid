@@ -2,17 +2,19 @@ using UnityEngine;
 using TMPro;
 using Unity.VisualScripting;
 using System.Diagnostics.Tracing;
+using UnityEngine.SceneManagement;
 
 public class YearTimer : MonoBehaviour
 {
     public static YearTimer instance;
+    [SerializeField] GameObject victoryScreen;
     [SerializeField] TextMeshProUGUI timePassedText;
     private float timePassed;
     private float timeRemaining;
-    private float timeToWinGame = 310;
+    private float timeToWinGame = 242.5f;
 
     [Header("TimeValue")]
-    float SecondToMonthRatio = 0.2f;
+    float SecondToMonthRatio = 0.25f; //every second is equal to a month
     int MonthsPerYear = 12;
 
     void Awake()
@@ -41,7 +43,16 @@ public class YearTimer : MonoBehaviour
             timeRemaining -= 1 * Time.deltaTime;
             StructureTimePassedText();
         }
+        else
+        {
+            victoryScreen.SetActive(true);
+            Invoke("ResetToMain",10);
+        }
         
+    }
+    void ResetToMain()
+    {
+        SceneManager.LoadScene(0); //mainmenu
     }
     public string StructureTime(float timeInSeconds)
     {
@@ -59,7 +70,7 @@ public class YearTimer : MonoBehaviour
 
         if(years != 0 && remainingMonths != 0)
         {
-            return $"{years} Years, {remainingMonths} months";
+            return $"{years} Years,  {remainingMonths} months";
         }
         else if(years != 0)
         {
