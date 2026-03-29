@@ -41,7 +41,7 @@ public class GameStateManager : MonoBehaviour
         {
             isGameOver = true;
             deathScreen.SetActive(true);
-            Destroy(MusicManager.instance);
+            Destroy(MusicManager.instance.gameObject);
             Invoke("ResetToMain",10);
         }
         
