@@ -59,10 +59,14 @@ public class Country : MonoBehaviour
         AM = GetComponent<Animator>();
 
 
-        //for (int i = 0; i < 1; i++)
-        //    {
-        //        Instantiate(OfficePrefab,WhereToSpawnObjectInCountry(),Quaternion.identity);
-        //    }
+        //SpawnStructures(5);
+    }
+    void SpawnStructures(int amount)
+    {
+        for (int i = 0; i < amount; i++)
+        {
+            Instantiate(OfficePrefab,WhereToSpawnObjectInCountry(),Quaternion.identity);
+        }
     }
     public void SetUpRandomCrisis(int funding, float timeLeft)
     {

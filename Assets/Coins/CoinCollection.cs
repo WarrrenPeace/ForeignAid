@@ -28,12 +28,14 @@ public class CoinCollection : MonoBehaviour
     {
         amountOfCoins += amount;
         coinAmountText.text = amountOfCoins.ToString();
+        SoundEffectManager.instance.PlayPickUp();
     }
     public void RemoveCoinFromCollection()
     {
         if(amountOfCoins - 1 >= 0)
         {
             amountOfCoins -= 1;
+            SoundEffectManager.instance.PlaySpend();
             if(amountOfCoins > 0)
             {
                 coinAmountText.text = amountOfCoins.ToString();

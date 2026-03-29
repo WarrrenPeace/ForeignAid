@@ -150,7 +150,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: e9d4185cd0c584a42a7142e24b4b9ffe, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.4
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -612,6 +612,7 @@ MonoBehaviour:
   PC: {fileID: 299084874}
   SR: {fileID: 299084873}
   AM: {fileID: 299084876}
+  OfficePrefab: {fileID: 0}
   GUICountryName: {fileID: 0}
   GUICountryFunding: {fileID: 0}
   GUITimeLeft: {fileID: 0}
@@ -1297,6 +1298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   RB: {fileID: 516704429}
+  SR: {fileID: 0}
   movementSpeed: 12.5
 --- !u!58 &516704432
 CircleCollider2D:
@@ -6847,6 +6849,7 @@ MonoBehaviour:
   PC: {fileID: 757213284}
   SR: {fileID: 757213283}
   AM: {fileID: 757213286}
+  OfficePrefab: {fileID: 0}
   GUICountryName: {fileID: 0}
   GUICountryFunding: {fileID: 0}
   GUITimeLeft: {fileID: 0}
@@ -7253,6 +7256,7 @@ MonoBehaviour:
   PC: {fileID: 890833951}
   SR: {fileID: 890833950}
   AM: {fileID: 890833953}
+  OfficePrefab: {fileID: 0}
   GUICountryName: {fileID: 0}
   GUICountryFunding: {fileID: 0}
   GUITimeLeft: {fileID: 0}
@@ -7509,6 +7513,7 @@ MonoBehaviour:
   PC: {fileID: 958676847}
   SR: {fileID: 958676846}
   AM: {fileID: 958676849}
+  OfficePrefab: {fileID: 0}
   GUICountryName: {fileID: 1605628564}
   GUICountryFunding: {fileID: 748145215}
   GUITimeLeft: {fileID: 0}
@@ -8058,6 +8063,7 @@ MonoBehaviour:
   PC: {fileID: 1302266486}
   SR: {fileID: 1302266485}
   AM: {fileID: 1302266488}
+  OfficePrefab: {fileID: 0}
   GUICountryName: {fileID: 0}
   GUICountryFunding: {fileID: 0}
   GUITimeLeft: {fileID: 0}
