@@ -13,6 +13,7 @@ public class Country : MonoBehaviour
     public SpriteRenderer SR;
     
     public Animator AM;
+    [SerializeField] GameObject OfficePrefab;
     [SerializeField] TextMeshProUGUI GUICountryName;
     [SerializeField] TextMeshProUGUI GUICountryFunding;
     [SerializeField] TextMeshProUGUI GUITimeLeft;
@@ -24,6 +25,7 @@ public class Country : MonoBehaviour
     [SerializeField] float currentFUNDING; //how many coins county has
     [SerializeField] float deathTimer; //how much time until death
     bool isOutOfFunding;
+    bool OnCrisisCooldown = false;
     [SerializeField] SpriteRenderer borderSR;
 
 
@@ -57,7 +59,10 @@ public class Country : MonoBehaviour
         AM = GetComponent<Animator>();
 
 
-        //SetUpRandomStartBudget();
+        //for (int i = 0; i < 1; i++)
+        //    {
+        //        Instantiate(OfficePrefab,WhereToSpawnObjectInCountry(),Quaternion.identity);
+        //    }
     }
     public void SetUpRandomCrisis(int funding, float timeLeft)
     {
@@ -82,7 +87,7 @@ public class Country : MonoBehaviour
             currentFUNDING += funding; 
             GUICountryFunding.text = FundingToString();
             GUICountryFunding.color = postiveBalance;
-            CountryCrisisManager.instance.home.ForceSpawnTaxes(3); //Free coins if country saved itself
+            CountryCrisisManager.instance.home.ForceSpawnTaxes(7); //Free coins if country saved itself
         }
     }
         
@@ -157,10 +162,20 @@ public class Country : MonoBehaviour
 
         GUICountryFunding.color = postiveBalance;
         GUITimeLeft.text = "";
+
+        CountryCrisisManager.instance.home.ForceSpawnTaxes(4); //Free coins after saving country
+
+        OnCrisisCooldown = true;
+        Invoke("CrisisCooldown", 8);
+    }
+    void CrisisCooldown() //This is to stop country from going into crisis right after being fixed
+    {
+        OnCrisisCooldown = false;
     }
     void KillCountry()
     {
         StateCondition = Condition.Dead;
+        GameStateManager.instance.OnCountryDeath();
         CountryCrisisManager.instance.RemoveCountryFromList(this);
         isOutOfFunding = true;
         AM.SetTrigger("Kill");
@@ -180,13 +195,31 @@ public class Country : MonoBehaviour
     }
     public bool isInCrisis()
     {
-        if(StateCondition == Condition.InCrisis || StateCondition == Condition.Dead)
+        if((StateCondition == Condition.InCrisis || StateCondition == Condition.Dead) || OnCrisisCooldown)
         {return true;}
         else return false;  
     }
     int EasyInt(float value) //Solution for converting to in in the same line im converting it to string
     {
         return (int)value;
+    }
+
+
+
+
+    Vector2 WhereToSpawnObjectInCountry()
+    {
+        Vector2 randomPoint;
+        float margin = 0.35f;
+        do {
+        randomPoint = new Vector3(
+            UnityEngine.Random.Range(PC.bounds.min.x + margin, PC.bounds.max.x - margin), //WOWOWOWOWWW WOW THIS CRASHES GAME IF I ADD TO MIN MAX... HOW?
+            UnityEngine.Random.Range(PC.bounds.min.y + margin, PC.bounds.max.y - margin),
+            UnityEngine.Random.Range(PC.bounds.min.z, PC.bounds.max.z)
+        );
+    } while (!PC.OverlapPoint(randomPoint));
+
+    return randomPoint;
     }
 
 }

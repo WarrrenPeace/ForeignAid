@@ -7,7 +7,8 @@ public class CountryCrisisManager : MonoBehaviour
     [SerializeField] List<Country> listOfCountries;
     public CountryHome home;
     [SerializeField] float gracePeriodTimer = 5;
-    [SerializeField] float crisisTimerMin = 4;
+    float crisisTimerMin = 4;
+    [SerializeField] float localDiff;
 
     void Awake()
     {
@@ -18,6 +19,10 @@ public class CountryCrisisManager : MonoBehaviour
     {
         Invoke("StartGame",gracePeriodTimer);
         
+    }
+    void Update()
+    {
+        localDiff = YearTimer.instance.getTotalTimePassed() * 0.1f;
     }
     public void AddCountryToList(Country country)
     {
@@ -73,9 +78,8 @@ public class CountryCrisisManager : MonoBehaviour
             {
                 //Apply crisis
                 Debug.Log(listOfCountries[i].name +" Has no crisis, adding it now");
-                float localDiff;
                 localDiff = YearTimer.instance.getTotalTimePassed() * 0.1f;
-                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10 -(int)localDiff, -4),-Random.Range(-50, -12));
+                listOfCountries[i].SetUpRandomCrisis(Random.Range(-11 -(int)localDiff, -3 -(int)localDiff),-Random.Range(-70, -18));
                 break;
             }
         }
