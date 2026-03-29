@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using System;
-using UnityEditor.PackageManager;
 
 public class Country : MonoBehaviour
 {
@@ -12,16 +11,20 @@ public class Country : MonoBehaviour
     [SerializeField] Condition StateCondition;
     public PolygonCollider2D PC;
     public SpriteRenderer SR;
+    
     public Animator AM;
     [SerializeField] TextMeshProUGUI GUICountryName;
     [SerializeField] TextMeshProUGUI GUICountryFunding;
-    [SerializeField] TextMeshProUGUI GUICountryCollapse;
+    [SerializeField] TextMeshProUGUI GUITimeLeft;
     [SerializeField] Color postiveBalance;
     [SerializeField] Color negativeBalance;
+    [SerializeField] Color PositiveFillColor;
+    [SerializeField] Color negativeFillColor;
 
     [SerializeField] float currentFUNDING; //how many coins county has
     [SerializeField] float deathTimer; //how much time until death
     bool isOutOfFunding;
+    [SerializeField] SpriteRenderer borderSR;
 
 
 
@@ -34,6 +37,13 @@ public class Country : MonoBehaviour
     public void SetUPGUI()
     {
         GUICountryName.text = gameObject.name;
+    }
+    public void ToggleBorder(bool on)
+    {
+        if(on)
+        {borderSR.color = Color.white; borderSR.sortingOrder = 5;}
+        else {borderSR.color = Color.black; borderSR.sortingOrder = 0;}
+
     }
     String FundingToString()
     {
@@ -55,19 +65,25 @@ public class Country : MonoBehaviour
         if(currentFUNDING + funding <= -1)
         {
             StateCondition = Condition.InCrisis;
+
+            currentFUNDING += funding; 
+            GUICountryFunding.text = FundingToString();
+
             
-            deathTimer += timeLeft;
+            deathTimer = timeLeft;
             //Set color of GUICountryFunding to grey when negative value
             GUICountryFunding.color = negativeBalance;
+
+            
         }
+        
         else //saved from crisis!
         {
-            
+            currentFUNDING += funding; 
+            GUICountryFunding.text = FundingToString();
             GUICountryFunding.color = postiveBalance;
+            CountryCrisisManager.instance.home.ForceSpawnTaxes(3); //Free coins if country saved itself
         }
-
-        currentFUNDING += funding; 
-        GUICountryFunding.text = FundingToString();
     }
         
 
@@ -102,7 +118,7 @@ public class Country : MonoBehaviour
         {
             deathTimer -= 1 * Time.deltaTime;
             //GUICountryFunding.text = FundingToString();
-            GUICountryCollapse.text = "Will Collapse in " + YearTimer.instance.StructureTime(deathTimer);
+            GUITimeLeft.text = "Will Collapse in " + YearTimer.instance.StructureTime(deathTimer);
         }
         else
         {
@@ -140,7 +156,7 @@ public class Country : MonoBehaviour
         StateCondition = Condition.Alive;
 
         GUICountryFunding.color = postiveBalance;
-        GUICountryCollapse.text = "";
+        GUITimeLeft.text = "";
     }
     void KillCountry()
     {
@@ -149,7 +165,7 @@ public class Country : MonoBehaviour
         isOutOfFunding = true;
         AM.SetTrigger("Kill");
         GUICountryFunding.text = "";
-        GUICountryCollapse.text = "";
+        GUITimeLeft.text = "";
     }
     public bool canRecieveFunding()
     {
@@ -164,17 +180,9 @@ public class Country : MonoBehaviour
     }
     public bool isInCrisis()
     {
-        switch (StateCondition)
-        {
-            case Condition.Alive:
-                return false;
-            case Condition.InCrisis:
-                return false;
-            case Condition.Dead:
-                return false;
-        }
-        Debug.Log("false");
-        return false;
+        if(StateCondition == Condition.InCrisis || StateCondition == Condition.Dead)
+        {return true;}
+        else return false;  
     }
     int EasyInt(float value) //Solution for converting to in in the same line im converting it to string
     {

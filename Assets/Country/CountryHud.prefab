@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9189744531176826585}
   - component: {fileID: 5623468178447703689}
   m_Layer: 5
-  m_Name: Funding (1)
+  m_Name: death
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -203,7 +203,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: KingdomVille
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 04c4b7927903f0940acd71cf36ce7ac5, type: 2}
   m_sharedMaterial: {fileID: -7646151971747529847, guid: 04c4b7927903f0940acd71cf36ce7ac5, type: 2}

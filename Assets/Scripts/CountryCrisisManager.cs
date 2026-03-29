@@ -5,9 +5,9 @@ public class CountryCrisisManager : MonoBehaviour
 {
     public static CountryCrisisManager instance;
     [SerializeField] List<Country> listOfCountries;
-    private CountryHome home;
+    public CountryHome home;
     [SerializeField] float gracePeriodTimer = 5;
-    [SerializeField] float crisisTimer = 10;
+    [SerializeField] float crisisTimerMin = 4;
 
     void Awake()
     {
@@ -36,35 +36,46 @@ public class CountryCrisisManager : MonoBehaviour
     {
         //Pick random country to put in crisis
         InflictCrisis();
-        //Repeat this every 5 seconds
-        InvokeRepeating("DetermineNextCrisis",crisisTimer,crisisTimer);
+
+        Invoke("DetermineNextCrisis",Random.Range(crisisTimerMin,11));
     }
 
     void DetermineNextCrisis()
     {
-        if(Random.Range(0,101) >= 50)
+        if(Random.Range(0,101) >= 30) //chance to start crisis
         {
             InflictCrisis();
         }
         else
         {
-            Debug.Log("skipped");
+            if(Random.Range(0,101) >= 50) {home.ForceSpawnTaxes(Random.Range(0,11));} //50% chance no crisis will grant bonus coins
         }
+        Invoke("DetermineNextCrisis",Random.Range(crisisTimerMin,10)); //Repeats only after actually doing crisis
     }
     void InflictCrisis()
     {
+        int InCrisis = 0;
+        Shuffle(listOfCountries);
         for (int i = 0; i < listOfCountries.Count; i++)
         {
-            Shuffle(listOfCountries);
-            if(listOfCountries[i].isInCrisis()) //Country already in need
+            if(listOfCountries[i].isInCrisis()) //Country already needs help skip it
             {
                 //Skip it and find another
+                Debug.Log(listOfCountries[i].name + " Already in crisis, skipping it now");
+                InCrisis += 1;
+                if(InCrisis >= listOfCountries.Count)
+                {
+                    Debug.Log("Everyone is in crisis");
+                }
                 continue;
             }
             else 
             {
                 //Apply crisis
-                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10, -4),-Random.Range(-30, -9));
+                Debug.Log(listOfCountries[i].name +" Has no crisis, adding it now");
+                float localDiff;
+                localDiff = YearTimer.instance.getTotalTimePassed() * 0.1f;
+                listOfCountries[i].SetUpRandomCrisis(Random.Range(-10 -(int)localDiff, -4),-Random.Range(-50, -12));
                 break;
             }
         }

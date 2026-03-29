@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 
 public class CountrySelector : MonoBehaviour
@@ -17,7 +16,6 @@ public class CountrySelector : MonoBehaviour
         instance = this;
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         InvokeRepeating("DetermineTick",0,0.05f);
@@ -39,7 +37,6 @@ public class CountrySelector : MonoBehaviour
         }
         else if (country.tag == "HomeCountry")
         {
-            //Debug.Log("Checked home");
             return false;
         }
         else
@@ -50,7 +47,6 @@ public class CountrySelector : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Country"))
         {
-            //Debug.Log("Entered" + collision.name);
             selectedCountries.Add(collision.gameObject.GetComponent<Country>());
         }
         
@@ -59,7 +55,6 @@ public class CountrySelector : MonoBehaviour
     {
         if(collision.gameObject.layer == LayerMask.NameToLayer("Country"))
         {
-            //Debug.Log("left" + collision.name);
             selectedCountries.Remove(collision.gameObject.GetComponent<Country>());
         }
         
@@ -72,11 +67,13 @@ public class CountrySelector : MonoBehaviour
     {
         if(selectedCountries.Count >= 1)
         {
+            if(targetCountry != null) {targetCountry.ToggleBorder(false);}
             targetCountry = selectedCountries[0];
             UpdateTargetCountryVisual();
         }
         else
         {
+            if(targetCountry != null) {targetCountry.ToggleBorder(false);}
             targetCountry = null;
             targetCountrytext.text = "";
         }
@@ -84,6 +81,7 @@ public class CountrySelector : MonoBehaviour
     }
     void UpdateTargetCountryVisual()
     {
+        targetCountry.ToggleBorder(true);
         targetCountrytext.text = targetCountry.name;
     }
 }

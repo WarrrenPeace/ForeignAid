@@ -45,14 +45,9 @@ public class YearTimer : MonoBehaviour
         }
         else
         {
-            victoryScreen.SetActive(true);
-            Invoke("ResetToMain",10);
+            GameStateManager.instance.OnVictory();
         }
         
-    }
-    void ResetToMain()
-    {
-        SceneManager.LoadScene(0); //mainmenu
     }
     public string StructureTime(float timeInSeconds)
     {
@@ -89,6 +84,6 @@ public class YearTimer : MonoBehaviour
     }
     void StructureTimePassedText()
     {
-        timePassedText.text = StructureTime(timeRemaining) + " remaining";
+        timePassedText.text = StructureTime(timeRemaining) + " Remaining";
     }
 }
