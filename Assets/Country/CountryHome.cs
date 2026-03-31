@@ -6,6 +6,7 @@ public class CountryHome : Country
     [SerializeField] float IncomeTimer = 3; //Counter to spawn another coin
     [SerializeField] float IncomeMult = 1; //amount multiplied to income to control how fast coins spawn
     [SerializeField] GameObject coin;
+    [SerializeField] GameObject koin;
     [SerializeField] int amountOfCoinsToSpawn = 1;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -32,7 +33,8 @@ public class CountryHome : Country
             IncomeTimer = 3;
             for (int i = 0; i < amountOfCoinsToSpawn; i++)
             {
-                Instantiate(coin,WhereToSpawnCoin(),quaternion.identity);
+                
+                
             }
             
         }
@@ -44,6 +46,15 @@ public class CountryHome : Country
             {
                 Instantiate(coin,WhereToSpawnCoin(),quaternion.identity);
             }
+    }
+    void SpawnCoin()
+    {
+        if(UnityEngine.Random.Range(0,101) >= 90)
+        {
+            Instantiate(koin,WhereToSpawnCoin(),quaternion.identity);
+        }
+        else
+        {Instantiate(coin,WhereToSpawnCoin(),quaternion.identity);}
     }
     Vector2 WhereToSpawnCoin()
     {
