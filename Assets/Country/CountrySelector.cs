@@ -37,7 +37,7 @@ public class CountrySelector : MonoBehaviour
         }
         else if (country.tag == "HomeCountry")
         {
-            return false;
+            return true; //This broke my intentional mechanic oops
         }
         else
         return false;

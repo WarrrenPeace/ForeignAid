@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using TMPro;
 
 public class CountryHome : Country
 {
@@ -9,7 +10,9 @@ public class CountryHome : Country
     [SerializeField] GameObject koin;
     [SerializeField] int amountOfCoinsToSpawn = 1;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] float InvestTimer = 5; //Counter to spawn another coin
+    [SerializeField] TextMeshProUGUI GUIIncomeMult;
+
     void Start()
     {
         CountryCrisisManager.instance.AssignHomeCountry(this);
@@ -21,6 +24,7 @@ public class CountryHome : Country
     void Update()
     {
         TickDownGenerateTaxes();
+        TickDownInvestCoin();
     }
     void TickDownGenerateTaxes()
     {
@@ -33,8 +37,7 @@ public class CountryHome : Country
             IncomeTimer = 3;
             for (int i = 0; i < amountOfCoinsToSpawn; i++)
             {
-                
-                
+                SpawnCoin();
             }
             
         }
@@ -44,7 +47,7 @@ public class CountryHome : Country
     {
         for (int i = 0; i < amount; i++)
             {
-                Instantiate(coin,WhereToSpawnCoin(),quaternion.identity);
+                SpawnCoin();
             }
     }
     void SpawnCoin()
@@ -69,5 +72,34 @@ public class CountryHome : Country
     } while (!PC.OverlapPoint(randomPoint));
 
     return randomPoint;
+    }
+
+    void TickDownInvestCoin() //Runs on its own timer for consistancy
+    {
+        if(HasEnoughFunding(1)) //If has atleast 1 coin it will count to 5 and convert it to mult
+        {
+            if(InvestTimer - 1 >= 0)
+            {
+                InvestTimer -= 1 * Time.deltaTime;
+            }
+            else
+            {
+                InvestTimer = 5;
+                InvestCoinIntoMult();
+
+            }
+        }
+        
+    }
+    //Investment Logic
+    void InvestCoinIntoMult() //Call this to convert a coin into 0.05 added mult;
+    {
+        if(HasEnoughFunding(1))
+        {
+            ConsumeFunding(1);
+            IncomeMult = IncomeMult + 0.05f;
+            GUIIncomeMult.text = "IncomeMult = " + IncomeMult.ToString();
+        }
+        
     }
 }

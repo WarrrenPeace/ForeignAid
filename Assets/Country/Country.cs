@@ -160,6 +160,25 @@ public class Country : MonoBehaviour
             break;
         }
     }
+    public void ConsumeFunding(int amount)
+    {
+        if(currentFUNDING - amount >= 0)
+        {
+            currentFUNDING -= amount;
+        }
+        else
+        {
+            Debug.Log("not enough");
+        }
+        
+    }
+    public bool HasEnoughFunding(int amount)
+    {
+        if(currentFUNDING - amount >= 0)
+        {return true;}
+        else
+        return false;
+    }
     void SavedFromCrisis()
     {
         StateCondition = Condition.Alive;
